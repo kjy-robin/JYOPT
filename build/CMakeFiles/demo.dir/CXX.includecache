@@ -35,12 +35,6 @@ jyopt/optimizer/jyoptimizer.h
 -
 iostream
 -
-
-/home/holo/kjy_git/JYOPT/src/main.cpp
-jyopt/common/headers.h
--
-jyopt/optimizer/jyoptimizer.h
--
-iostream
+cmath
 -
 

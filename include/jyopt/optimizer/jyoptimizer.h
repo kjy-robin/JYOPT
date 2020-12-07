@@ -30,6 +30,8 @@ public:
     bool_t ShowG();
     bool_t ShowJ();
     bool_t ShowResidual();
+    bool_t ShowLambda();
+    bool_t ShowZLU();
 
 protected:
     bool_t MatrixInit();
@@ -38,17 +40,31 @@ protected:
 
     MatrixX CalcRes();
 
+    float64_t CalcObj();
+
     MatrixX CalcObjgrad();
 
     MatrixX CalcJacStub();
 
     MatrixX CalcJac();
 
+    float64_t CalcTheta();
+
+    float64_t CalcPhi();
+
+    MatrixX CalcHess();
+
     void UpdateZLU();
 
     void CheckXSFeasible();
 
+    MatrixX pinv(const MatrixX& a, const float64_t tol = 0.0);
+
 private:
+    float64_t tau_;
+
+    float64_t th_;
+
     MatrixX x_;
 
     MatrixX xl_;
@@ -74,6 +90,8 @@ private:
     MatrixX g_;
 
     MatrixX j_;
+
+    MatrixX lam_;
 
     BaseParam param_;
 };

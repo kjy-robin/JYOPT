@@ -35,4 +35,6 @@ jyopt/optimizer/jyoptimizer.h
 -
 iostream
 -
+cmath
+-
 

@@ -29,7 +29,7 @@ struct BaseParam
     /**
      * @brief initial barrier term
      */
-    float64_t mu_ = 0.1;
+    float64_t mu_ = 10;
 
     /**
      * @brief update mu? - used for testing
@@ -59,7 +59,7 @@ struct BaseParam
     };
     MATRIX_INVERSION matrix_ = CONDENSED_SYMMETRIC_MATRIX;
 
-    uint32_t max_iteration_ = 100;
+    uint32_t max_iteration_num_ = 100;
 
     /**
      * @brief initialize slack variables to equation residual (true)

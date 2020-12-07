@@ -2,6 +2,7 @@
 #include <jyopt/common/constants.h>
 #include <jyopt/optimizer/jyoptimizer.h>
 #include <iostream>
+#include <cmath>
 
 namespace JYOPT
 {
@@ -34,7 +35,14 @@ bool_t Jyoptimizer::MatrixInit()
     residual_ = MatrixX::Zero(1, 2);
     residual_ = CalcRes();
 
+    if (param_.slack_init_)
+    {
+        s_(0, 0) = residual_(0, 0);
+    }
+
     CheckXSFeasible();
+
+    tau_ = std::min<float64_t>(param_.tau_max_, 100 * param_.mu_);
 
     zl_ = MatrixX::Zero(1, x_.cols() + s_.cols());
 
@@ -42,14 +50,20 @@ bool_t Jyoptimizer::MatrixInit()
 
     UpdateZLU();
 
-    // init
+    // init Gradient matrix of object function
     g_ = MatrixX::Zero(1, 5);
-    g_         = CalcObjgrad();
+    g_ = CalcObjgrad();
 
-    // init
+    // init jacobi matrix of constrains
     j_ = MatrixX::Zero(2, 5);
-    j_         = CalcJac();
+    j_ = CalcJac();
 
+    // init lambda
+    lam_             = MatrixX::Zero(2, 1);
+    MatrixX temp_lam = pinv((j_ * j_.transpose())) * j_ * (zl_.transpose() - zu_.transpose() - g_.transpose());
+    lam_             = temp_lam.transpose();
+
+    th_ = CalcTheta();
     return true;
 }
 
@@ -75,6 +89,15 @@ MatrixX Jyoptimizer::CalcJacStub()
     return res;
 }
 
+float64_t Jyoptimizer::CalcObj()
+{
+    float64_t x1 = x_(0, 0);
+    float64_t x2 = x_(0, 1);
+    float64_t x3 = x_(0, 2);
+    float64_t x4 = x_(0, 3);
+
+    return x1 * x4 * (x1 + x2 + x3) + x3;
+}
 MatrixX Jyoptimizer::CalcJac()
 {
     MatrixX res_temp = CalcJacStub();
@@ -105,6 +128,38 @@ MatrixX Jyoptimizer::CalcObjgrad()
 
     // std::cout<<res<<std::endl;
     return res;
+}
+
+MatrixX Jyoptimizer::CalcHess()
+{
+    float64_t x1 = x_(0, 0);
+    float64_t x2 = x_(0, 1);
+    float64_t x3 = x_(0, 2);
+    float64_t x4 = x_(0, 3);
+
+    float64_t lam1 = lam_(0, 0);
+    float64_t lam2 = lam_(0, 1);
+
+    MatrixX   h       = MatrixX::Zero(4, 4);
+    float64_t objfact = 1.0;
+
+    h(0, 0) = objfact * 2 * x4 + lam2 * 2;
+    h(1, 0) = objfact * x4 + lam1 * x3 * x4;
+    h(0, 1) = h(1, 0);
+    h(1, 1) = lam2 * 2;
+    h(2, 0) = objfact * x4 + lam1 * x2 * x4;
+    h(0, 2) = h(2, 0);
+    h(2, 1) = lam1 * x1 * x4;
+    h(1, 2) = h(2, 1);
+    h(2, 2) = lam2 * 2;
+    h(3, 0) = objfact * (2 * x1 + x2 + x3) + lam1 * x2 * x3;
+    h(0, 3) = h(3, 0);
+    h(3, 1) = objfact * x1 + lam1 * x1 * x3;
+    h(1, 3) = h(3, 1);
+    h(3, 2) = objfact * x1 + lam1 * x1 * x2;
+    h(2, 3) = h(3, 2);
+    h(3, 3) = lam2 * 2;
+    return h;
 }
 
 void Jyoptimizer::UpdateZLU()
@@ -173,20 +228,169 @@ MatrixX Jyoptimizer::CalcRes()
     return res;
 }
 
+float64_t Jyoptimizer::CalcTheta()
+{
+    MatrixX temp_res = CalcRes();
+    return temp_res.cwiseAbs().sum();
+}
+
+float64_t Jyoptimizer::CalcPhi()
+{
+    float64_t ph = CalcObj();
+
+    for (uint32_t i = 0; i < 4; i++)
+    {
+        ph = ph - param_.mu_ * (log(x_(0, i) - xl_(0, i)) + log(xu_(0, i) - x_(0, i)));
+    }
+
+    ph = ph - param_.mu_ * (log(s_(0, 0) - bl_(0, 0)) + log(bu_(0, 0) - s_(0, 0)));
+
+    return ph;
+}
+
 bool_t Jyoptimizer::OptCalcFunc()
 {
     MatrixInit();
 
-    // float64_t tau = std::min<float64_t>(param_.tau_max_, 100 * param_.mu_);
+    // ShowResidual();
+    // ShowX();
+    // ShowS();
+    // ShowG();
+    // ShowJ();
+    // ShowLambda();
+    // ShowZLU();
 
-    ShowResidual();
-    ShowX();
-    ShowS();
-    ShowG();
-    ShowJ();
+    float64_t alpha_pr = 1.0;
+    float64_t alpha_du = 1.0;
+    MatrixX   e        = MatrixX::Ones(5, 1);
+
+    uint32_t iteration_num = 0;
+    while(iteration_num<param_.max_iteration_num_)
+    {
+        residual_ = CalcRes();
+
+        th_ = CalcTheta();
+
+        float64_t phi = CalcPhi();
+
+        // make diagonal matrices
+        MatrixX zml = MatrixX::Zero(zl_.cols(), zl_.cols());
+        for (uint32_t i = 0; i < zl_.cols(); i++)
+        {
+            zml(i, i) = zl_(0, i);
+        }
+
+        MatrixX zmu = MatrixX::Zero(zu_.cols(), zu_.cols());
+        for (uint32_t i = 0; i < zu_.cols(); i++)
+        {
+            zmu(i, i) = zu_(0, i);
+        }
+
+        // sigmas
+        MatrixX dml=MatrixX::Zero(5,5);
+        for(uint32_t i=0;i<dml.cols();i++)
+        {
+            if(i<4)
+            {
+                dml(i, i) = x_(0, i) - xl_(0, i);
+            }
+            else
+            {
+                dml(i, i) = s_(0, 0) - sl_(0, 0);
+            }
+        }
+
+        MatrixX dmu = MatrixX::Zero(5, 5);
+        for (uint32_t i = 0; i < dmu.cols(); i++)
+        {
+            if (i < 4)
+            {
+                dmu(i, i) = xu_(0, i) - x_(0, i);
+            }
+            else
+            {
+                dmu(i, i) = su_(0, 0) - s_(0, 0);
+            }
+        }
+
+        MatrixX inv_dml = MatrixX::Zero(5, 5);
+        MatrixX inv_dmu = MatrixX::Zero(5, 5);
+        MatrixX sigl    = MatrixX::Zero(5, 5);
+        MatrixX sigu    = MatrixX::Zero(5, 5);
+
+        for (uint32_t i = 0; i < 5; i++)
+        {
+            inv_dml(i, i) = 1 / dml(i, i);
+            inv_dmu(i, i) = 1 / dmu(i, i);
+            sigl(i, i)    = zml(i, i) / dml(i, i);
+            sigu(i, i)    = zmu(i, i) / dmu(i, i);
+        }
+
+        //  1st and 2nd derivatives
+        j_        = CalcJac();
+        MatrixX w = CalcHess();
+        g_        = CalcObjgrad();
+
+        MatrixX h = MatrixX::Zero(5, 5);
+        for (uint32_t i = 0; i < 5; i++)
+        {
+            for (uint32_t j = 0; j < 5; j++)
+            {
+                h(i, j) = sigl(i, j) + sigu(i, j);
+                if (i < 4 && j < 4)
+                {
+                    h(i, j) += w(i, j);
+                }
+            }
+        }
+
+        // construct and solve linear system Ax=b
+        MatrixX A1 = MatrixX::Zero(7, 7);
+        for (uint32_t i = 0; i < 5; i++)
+        {
+            for (uint32_t j = 0; j < 5; j++)
+            {
+                A1(i,j)=h(i,j);
+            }
+
+            for (uint32_t j = 0; j < 2; j++)
+            {
+                A1(i,j+5)=j_.transpose()(i,j);
+            }
+        }
+
+        for (uint32_t i = 0; i < 2; i++)
+        {
+            for (uint32_t j = 0; j < 5; j++)
+            {
+                A1(5 + i, j) = j_(i, j);
+            }
+        }
+
+        MatrixX b1 = MatrixX::Zero(7, 1);
+        MatrixX b1_temp1 = g_.transpose() - zl_.transpose() + zu_.transpose() + j_.transpose() * lam_.transpose() +
+                           zl_.transpose() - param_.mu_ * inv_dml * e - zu_.transpose() + param_.mu_ * inv_dmu * e;
+        MatrixX b1_temp2 = residual_.transpose();
+        for (uint32_t i = 0; i < 7; i++)
+        {
+            if (i < 5)
+            {
+                b1(i, 1) = b1_temp1(i, 1);
+            }
+            else
+            {
+                b1(i, 1) = b1_temp2(i, 1);
+            }
+        }
+
+        MatrixX d1 = -1.0 * pinv(A1) * b1;
+
+        iteration_num++;
+    }
 
     return true;
 }
+
 bool_t Jyoptimizer::ShowX()
 {
     std::cout << " - - - X - - - " << std::endl;
@@ -218,4 +422,43 @@ bool_t Jyoptimizer::ShowResidual()
     std::cout << residual_ << std::endl;
     return true;
 }
+bool_t Jyoptimizer::ShowLambda()
+{
+    std::cout<<" - - - Lambda - - - "<<std::endl;
+    std::cout<<lam_<<std::endl;
+    // std::cout<<" + + + + + +"<<std::endl;
+    // std::cout<<(j_ * j_.transpose())<<std::endl;
+    // std::cout<<" + + + + + +"<<std::endl;
+    // std::cout<<pinv((j_ * j_.transpose()))<<std::endl;
+    // std::cout<<" + + + + + +"<<std::endl;
+    // std::cout<<(zl_.transpose() - zu_.transpose() - g_.transpose())<<std::endl;
+    return true;
+}
+bool_t Jyoptimizer::ShowZLU()
+{
+    std::cout << " - - - ZL - - - " << std::endl;
+    std::cout << zl_ << std::endl;
+    std::cout << " - - - ZU - - - " << std::endl;
+    std::cout << zu_ << std::endl;
+    return true;
+}
+MatrixX Jyoptimizer::pinv(const MatrixX& a, const float64_t tol )
+{
+    Eigen::JacobiSVD<MatrixX> svd_holder(a, Eigen::ComputeThinU | Eigen::ComputeThinV);
+
+    MatrixX u = svd_holder.matrixU();
+    MatrixX v = svd_holder.matrixV();
+    MatrixX d = svd_holder.singularValues();
+
+    MatrixX s = MatrixX::Zero(v.cols(), u.cols());
+    for (uint32_t i = 0; i < d.size(); i++)
+    {
+        if (d(i, 0) > tol)
+        {
+            s(i, i) = 1 / d(i, 0);
+        }
+    }
+    return v * s * u.transpose();
+}
+
 }  // namespace JYOPT
