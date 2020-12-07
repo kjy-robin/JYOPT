@@ -9,18 +9,24 @@ SET(CMAKE_BUILD_TYPE "Debug")
 SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
-# 头文件目录
+# 添加头文件目录
 INCLUDE_DIRECTORIES (${PROJECT_SOURCE_DIR}/include)
 
 # 添加主源文件目录
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src DIR_SRCS)
 
-# 可执行文件生成目录
+# 添加库文件生成目录
+
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
+# 添加可执行文件生成目录
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 添加子源文件
-set(JYOPTIMIZER_SRC src/jyopt/optimizer/jyoptimizer.cpp)
-# set(JYOPTIMIZER_SRC src/jyopt/optimizer/*)
+set(JYOPTIMIZER_SRC ${JYOPTIMIZER_SRC} src/jyopt/optimizer/jyoptimizer.cpp)
 
 # 生成可执行文件
-ADD_EXECUTABLE(${PROJECT_NAME} ${DIR_SRCS} ${JYOPTIMIZER_SRC})
+ADD_EXECUTABLE(demo ${DIR_SRCS} ${JYOPTIMIZER_SRC})
+
+# 生成动态链接库
+ADD_LIBRARY(jyoptimizer SHARED ${JYOPTIMIZER_SRC})

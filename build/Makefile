@@ -111,17 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named JYOPT
+# Target rules for targets named demo
 
 # Build rule for target.
-JYOPT: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 JYOPT
-.PHONY : JYOPT
+demo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo
+.PHONY : demo
 
 # fast build rule for target.
-JYOPT/fast:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/build
-.PHONY : JYOPT/fast
+demo/fast:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/build
+.PHONY : demo/fast
+
+#=============================================================================
+# Target rules for targets named jyoptimizer
+
+# Build rule for target.
+jyoptimizer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jyoptimizer
+.PHONY : jyoptimizer
+
+# fast build rule for target.
+jyoptimizer/fast:
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/build
+.PHONY : jyoptimizer/fast
 
 src/jyopt/optimizer/jyoptimizer.o: src/jyopt/optimizer/jyoptimizer.cpp.o
 
@@ -129,7 +142,8 @@ src/jyopt/optimizer/jyoptimizer.o: src/jyopt/optimizer/jyoptimizer.cpp.o
 
 # target to build an object file
 src/jyopt/optimizer/jyoptimizer.cpp.o:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/jyopt/optimizer/jyoptimizer.cpp.o
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.o
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.o
 .PHONY : src/jyopt/optimizer/jyoptimizer.cpp.o
 
 src/jyopt/optimizer/jyoptimizer.i: src/jyopt/optimizer/jyoptimizer.cpp.i
@@ -138,7 +152,8 @@ src/jyopt/optimizer/jyoptimizer.i: src/jyopt/optimizer/jyoptimizer.cpp.i
 
 # target to preprocess a source file
 src/jyopt/optimizer/jyoptimizer.cpp.i:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/jyopt/optimizer/jyoptimizer.cpp.i
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.i
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.i
 .PHONY : src/jyopt/optimizer/jyoptimizer.cpp.i
 
 src/jyopt/optimizer/jyoptimizer.s: src/jyopt/optimizer/jyoptimizer.cpp.s
@@ -147,7 +162,8 @@ src/jyopt/optimizer/jyoptimizer.s: src/jyopt/optimizer/jyoptimizer.cpp.s
 
 # target to generate assembly for a file
 src/jyopt/optimizer/jyoptimizer.cpp.s:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/jyopt/optimizer/jyoptimizer.cpp.s
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.s
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.s
 .PHONY : src/jyopt/optimizer/jyoptimizer.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -156,7 +172,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -165,7 +181,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -174,7 +190,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -184,8 +200,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... JYOPT"
+	@echo "... demo"
 	@echo "... edit_cache"
+	@echo "... jyoptimizer"
 	@echo "... src/jyopt/optimizer/jyoptimizer.o"
 	@echo "... src/jyopt/optimizer/jyoptimizer.i"
 	@echo "... src/jyopt/optimizer/jyoptimizer.s"

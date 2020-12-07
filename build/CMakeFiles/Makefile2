@@ -65,39 +65,76 @@ CMAKE_SOURCE_DIR = /home/holo/kjy_git/JYOPT
 CMAKE_BINARY_DIR = /home/holo/kjy_git/JYOPT/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/JYOPT.dir
+# Target rules for target CMakeFiles/demo.dir
 
 # All Build rule for target.
-CMakeFiles/JYOPT.dir/all:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/depend
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/holo/kjy_git/JYOPT/build/CMakeFiles --progress-num=1,2,3 "Built target JYOPT"
-.PHONY : CMakeFiles/JYOPT.dir/all
+CMakeFiles/demo.dir/all:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/depend
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/holo/kjy_git/JYOPT/build/CMakeFiles --progress-num=1,2,3 "Built target demo"
+.PHONY : CMakeFiles/demo.dir/all
 
 # Include target in all.
-all: CMakeFiles/JYOPT.dir/all
+all: CMakeFiles/demo.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/JYOPT.dir/rule: cmake_check_build_system
+CMakeFiles/demo.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/holo/kjy_git/JYOPT/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/JYOPT.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/demo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/holo/kjy_git/JYOPT/build/CMakeFiles 0
-.PHONY : CMakeFiles/JYOPT.dir/rule
+.PHONY : CMakeFiles/demo.dir/rule
 
 # Convenience name for target.
-JYOPT: CMakeFiles/JYOPT.dir/rule
+demo: CMakeFiles/demo.dir/rule
 
-.PHONY : JYOPT
-
-# clean rule for target.
-CMakeFiles/JYOPT.dir/clean:
-	$(MAKE) -f CMakeFiles/JYOPT.dir/build.make CMakeFiles/JYOPT.dir/clean
-.PHONY : CMakeFiles/JYOPT.dir/clean
+.PHONY : demo
 
 # clean rule for target.
-clean: CMakeFiles/JYOPT.dir/clean
+CMakeFiles/demo.dir/clean:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/clean
+.PHONY : CMakeFiles/demo.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/demo.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/jyoptimizer.dir
+
+# All Build rule for target.
+CMakeFiles/jyoptimizer.dir/all:
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/depend
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/holo/kjy_git/JYOPT/build/CMakeFiles --progress-num=4,5 "Built target jyoptimizer"
+.PHONY : CMakeFiles/jyoptimizer.dir/all
+
+# Include target in all.
+all: CMakeFiles/jyoptimizer.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/jyoptimizer.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/holo/kjy_git/JYOPT/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/jyoptimizer.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/holo/kjy_git/JYOPT/build/CMakeFiles 0
+.PHONY : CMakeFiles/jyoptimizer.dir/rule
+
+# Convenience name for target.
+jyoptimizer: CMakeFiles/jyoptimizer.dir/rule
+
+.PHONY : jyoptimizer
+
+# clean rule for target.
+CMakeFiles/jyoptimizer.dir/clean:
+	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/clean
+.PHONY : CMakeFiles/jyoptimizer.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/jyoptimizer.dir/clean
 
 .PHONY : clean
 

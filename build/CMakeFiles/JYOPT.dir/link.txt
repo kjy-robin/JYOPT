@@ -1,1 +1,0 @@
-g++   -O0 -Wall -g2 -ggdb  -rdynamic CMakeFiles/JYOPT.dir/src/main.cpp.o CMakeFiles/JYOPT.dir/src/jyopt/optimizer/jyoptimizer.cpp.o  -o ../bin/JYOPT 

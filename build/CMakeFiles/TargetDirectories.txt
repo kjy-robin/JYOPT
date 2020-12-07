@@ -1,3 +1,4 @@
 /home/holo/kjy_git/JYOPT/build/CMakeFiles/rebuild_cache.dir
-/home/holo/kjy_git/JYOPT/build/CMakeFiles/JYOPT.dir
+/home/holo/kjy_git/JYOPT/build/CMakeFiles/demo.dir
 /home/holo/kjy_git/JYOPT/build/CMakeFiles/edit_cache.dir
+/home/holo/kjy_git/JYOPT/build/CMakeFiles/jyoptimizer.dir
