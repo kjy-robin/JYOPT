@@ -140,7 +140,7 @@ MatrixX Jyoptimizer::CalcHess()
     float64_t lam1 = lam_(0, 0);
     float64_t lam2 = lam_(0, 1);
 
-    MatrixX   h       = MatrixX::Zero(4, 4);
+    MatrixX   h       = MatrixX::Zero(5, 5);
     float64_t objfact = 1.0;
 
     h(0, 0) = objfact * 2 * x4 + lam2 * 2;
@@ -332,58 +332,48 @@ bool_t Jyoptimizer::OptCalcFunc()
         g_        = CalcObjgrad();
 
         MatrixX h = MatrixX::Zero(5, 5);
-        for (uint32_t i = 0; i < 5; i++)
-        {
-            for (uint32_t j = 0; j < 5; j++)
-            {
-                h(i, j) = sigl(i, j) + sigu(i, j);
-                if (i < 4 && j < 4)
-                {
-                    h(i, j) += w(i, j);
-                }
-            }
-        }
+
+        h = w + sigl + sigu;
 
         // construct and solve linear system Ax=b
         MatrixX A1 = MatrixX::Zero(7, 7);
-        for (uint32_t i = 0; i < 5; i++)
-        {
-            for (uint32_t j = 0; j < 5; j++)
-            {
-                A1(i,j)=h(i,j);
-            }
 
-            for (uint32_t j = 0; j < 2; j++)
-            {
-                A1(i,j+5)=j_.transpose()(i,j);
-            }
-        }
+        A1.block(0, 0, 5, 5) = h;
+        A1.block(5, 0, 2, 5) = j_;
+        A1.block(0, 5, 5, 2) = j_.transpose();
 
-        for (uint32_t i = 0; i < 2; i++)
-        {
-            for (uint32_t j = 0; j < 5; j++)
-            {
-                A1(5 + i, j) = j_(i, j);
-            }
-        }
-
-        MatrixX b1 = MatrixX::Zero(7, 1);
+        MatrixX b1       = MatrixX::Zero(7, 1);
         MatrixX b1_temp1 = g_.transpose() - zl_.transpose() + zu_.transpose() + j_.transpose() * lam_.transpose() +
                            zl_.transpose() - param_.mu_ * inv_dml * e - zu_.transpose() + param_.mu_ * inv_dmu * e;
-        MatrixX b1_temp2 = residual_.transpose();
-        for (uint32_t i = 0; i < 7; i++)
-        {
-            if (i < 5)
-            {
-                b1(i, 1) = b1_temp1(i, 1);
-            }
-            else
-            {
-                b1(i, 1) = b1_temp2(i, 1);
-            }
-        }
+        MatrixX b1_temp2     = residual_.transpose();
+        b1.block(0, 0, 5, 1) = b1_temp1;
+        b1.block(0, 5, 2, 1) = b1_temp2;
 
         MatrixX d1 = -1.0 * pinv(A1) * b1;
+
+        MatrixX dx1   = d1.block(0, 0, 4, 1);
+        MatrixX ds1   = d1.block(4, 0, 1, 1);
+        MatrixX dlam1 = d1.block(5, 0, 2, 1);
+
+        // compute search direction for z (explicit solution)
+
+        MatrixX dzl1         = MatrixX::Zero(5, 1);
+        MatrixX dzu1         = MatrixX::Zero(5, 1);
+        MatrixX temp_dx1_ds1 = MatrixX::Zero(5, 1);
+
+        temp_dx1_ds1.block(0, 0, 4, 1) = dx1;
+        temp_dx1_ds1.block(4, 0, 1, 1) = ds1;
+
+        dzl1 = param_.mu_ * inv_dml * e - zl_.transpose() - sigl * temp_dx1_ds1;
+        dzu1 = param_.mu_ * inv_dmu * e - zu_.transpose() + sigu * temp_dx1_ds1;
+
+        // // Un -symmetric ,zl/zu implicitly solved
+        // // construct A
+        
+        // MatrixX A2=MatrixX::Zero(17,17);
+        // A2.block(0,0,5,5)=w;
+        // A2.block(5,0,2,5)=j_;
+        // A2.block(0,5,5,2)=j_.transpose();
 
         iteration_num++;
     }
