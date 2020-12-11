@@ -1,1 +1,0 @@
-g++ -fPIC  -O0 -Wall -g2 -ggdb  -shared -Wl,-soname,libjyoptimizer.so -o ../lib/libjyoptimizer.so CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.o 

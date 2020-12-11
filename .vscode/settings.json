@@ -55,6 +55,8 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "core": "cpp",
-        "dense": "cpp"
+        "dense": "cpp",
+        "geometry": "cpp",
+        "eigenvalues": "cpp"
     }
 }

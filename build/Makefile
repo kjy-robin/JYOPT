@@ -123,75 +123,86 @@ demo/fast:
 	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/build
 .PHONY : demo/fast
 
-#=============================================================================
-# Target rules for targets named jyoptimizer
+main.o: main.cpp.o
 
-# Build rule for target.
-jyoptimizer: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jyoptimizer
-.PHONY : jyoptimizer
-
-# fast build rule for target.
-jyoptimizer/fast:
-	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/build
-.PHONY : jyoptimizer/fast
-
-src/jyopt/optimizer/jyoptimizer.o: src/jyopt/optimizer/jyoptimizer.cpp.o
-
-.PHONY : src/jyopt/optimizer/jyoptimizer.o
+.PHONY : main.o
 
 # target to build an object file
-src/jyopt/optimizer/jyoptimizer.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.o
-	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.o
-.PHONY : src/jyopt/optimizer/jyoptimizer.cpp.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-src/jyopt/optimizer/jyoptimizer.i: src/jyopt/optimizer/jyoptimizer.cpp.i
+main.i: main.cpp.i
 
-.PHONY : src/jyopt/optimizer/jyoptimizer.i
+.PHONY : main.i
 
 # target to preprocess a source file
-src/jyopt/optimizer/jyoptimizer.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.i
-	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.i
-.PHONY : src/jyopt/optimizer/jyoptimizer.cpp.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-src/jyopt/optimizer/jyoptimizer.s: src/jyopt/optimizer/jyoptimizer.cpp.s
+main.s: main.cpp.s
 
-.PHONY : src/jyopt/optimizer/jyoptimizer.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-src/jyopt/optimizer/jyoptimizer.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.s
-	$(MAKE) -f CMakeFiles/jyoptimizer.dir/build.make CMakeFiles/jyoptimizer.dir/src/jyopt/optimizer/jyoptimizer.cpp.s
-.PHONY : src/jyopt/optimizer/jyoptimizer.cpp.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/main.cpp.s
+.PHONY : main.cpp.s
 
-src/main.o: src/main.cpp.o
+src/jyopt/optimizer/optimizer_application.o: src/jyopt/optimizer/optimizer_application.cpp.o
 
-.PHONY : src/main.o
+.PHONY : src/jyopt/optimizer/optimizer_application.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/jyopt/optimizer/optimizer_application.cpp.o:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/optimizer_application.cpp.o
+.PHONY : src/jyopt/optimizer/optimizer_application.cpp.o
 
-src/main.i: src/main.cpp.i
+src/jyopt/optimizer/optimizer_application.i: src/jyopt/optimizer/optimizer_application.cpp.i
 
-.PHONY : src/main.i
+.PHONY : src/jyopt/optimizer/optimizer_application.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/jyopt/optimizer/optimizer_application.cpp.i:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/optimizer_application.cpp.i
+.PHONY : src/jyopt/optimizer/optimizer_application.cpp.i
 
-src/main.s: src/main.cpp.s
+src/jyopt/optimizer/optimizer_application.s: src/jyopt/optimizer/optimizer_application.cpp.s
 
-.PHONY : src/main.s
+.PHONY : src/jyopt/optimizer/optimizer_application.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/jyopt/optimizer/optimizer_application.cpp.s:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/optimizer/optimizer_application.cpp.s
+.PHONY : src/jyopt/optimizer/optimizer_application.cpp.s
+
+src/jyopt/question/question_hs071.o: src/jyopt/question/question_hs071.cpp.o
+
+.PHONY : src/jyopt/question/question_hs071.o
+
+# target to build an object file
+src/jyopt/question/question_hs071.cpp.o:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/question/question_hs071.cpp.o
+.PHONY : src/jyopt/question/question_hs071.cpp.o
+
+src/jyopt/question/question_hs071.i: src/jyopt/question/question_hs071.cpp.i
+
+.PHONY : src/jyopt/question/question_hs071.i
+
+# target to preprocess a source file
+src/jyopt/question/question_hs071.cpp.i:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/question/question_hs071.cpp.i
+.PHONY : src/jyopt/question/question_hs071.cpp.i
+
+src/jyopt/question/question_hs071.s: src/jyopt/question/question_hs071.cpp.s
+
+.PHONY : src/jyopt/question/question_hs071.s
+
+# target to generate assembly for a file
+src/jyopt/question/question_hs071.cpp.s:
+	$(MAKE) -f CMakeFiles/demo.dir/build.make CMakeFiles/demo.dir/src/jyopt/question/question_hs071.cpp.s
+.PHONY : src/jyopt/question/question_hs071.cpp.s
 
 # Help Target
 help:
@@ -202,13 +213,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... demo"
 	@echo "... edit_cache"
-	@echo "... jyoptimizer"
-	@echo "... src/jyopt/optimizer/jyoptimizer.o"
-	@echo "... src/jyopt/optimizer/jyoptimizer.i"
-	@echo "... src/jyopt/optimizer/jyoptimizer.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... src/jyopt/optimizer/optimizer_application.o"
+	@echo "... src/jyopt/optimizer/optimizer_application.i"
+	@echo "... src/jyopt/optimizer/optimizer_application.s"
+	@echo "... src/jyopt/question/question_hs071.o"
+	@echo "... src/jyopt/question/question_hs071.i"
+	@echo "... src/jyopt/question/question_hs071.s"
 .PHONY : help
 
 

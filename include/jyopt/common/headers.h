@@ -15,6 +15,8 @@
 #define _JYOPT_HEADERS_H_
 
 #include <stdint.h>
+#include <Eigen/Dense>
+#include <memory>
 
 namespace JYOPT
 {
@@ -31,6 +33,9 @@ using uint64_t  = ::uint64_t;
 using bool_t    = bool;
 using char_t    = char;
 
+using EMatrix    = Eigen::MatrixXd;
+using EVector    = Eigen::VectorXd;
+using ERowVector = Eigen::RowVectorXd;
 }  // namespace JYOPT
 
 #endif

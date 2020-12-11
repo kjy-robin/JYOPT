@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/demo.dir/src/main.cpp.o"
-  "CMakeFiles/demo.dir/src/jyopt/optimizer/jyoptimizer.cpp.o"
+  "CMakeFiles/demo.dir/main.cpp.o"
+  "CMakeFiles/demo.dir/src/jyopt/question/question_hs071.cpp.o"
+  "CMakeFiles/demo.dir/src/jyopt/optimizer/optimizer_application.cpp.o"
   "../bin/demo.pdb"
   "../bin/demo"
 )
