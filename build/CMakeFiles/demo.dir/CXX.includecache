@@ -20,8 +20,6 @@ Eigen/Dense
 memory
 -
 
-../include/jyopt/common/macro.h
-
 ../include/jyopt/optimizer/optimizer_application.h
 jyopt/common/headers.h
 -
@@ -38,31 +36,13 @@ jyopt/common/headers.h
 jyopt/common/headers.h
 -
 
-../include/jyopt/question/question_hs071.h
-jyopt/question/question_base.h
--
-
-/home/holo/kjy_git/JYOPT/main.cpp
-jyopt/common/headers.h
--
-jyopt/question/question_hs071.h
--
-iostream
--
-
 /home/holo/kjy_git/JYOPT/src/jyopt/optimizer/optimizer_application.cpp
 jyopt/common/constants.h
 -
 jyopt/optimizer/optimizer_application.h
 -
+cmath
+-
 iostream
--
-
-/home/holo/kjy_git/JYOPT/src/jyopt/question/question_hs071.cpp
-assert.h
--
-jyopt/common/macro.h
--
-jyopt/question/question_hs071.h
 -
 

@@ -1,14 +1,12 @@
 #include <jyopt/common/headers.h>
+#include <jyopt/optimizer/optimizer_application.h>
 #include <jyopt/question/question_hs071.h>
 #include <iostream>
 
 int main()
 {
-    JYOPT::uint32_t   m, n;
-    JYOPT::QuestionHs hs;
-
-    hs.Get_Question_Info(n, m);
-
-    std::cout << "n :\t" << n << " m :\t" << m << std::endl;
+    JYOPT::QuestionHs           hs;
+    JYOPT::OptimizerApplication opt;
+    opt.OptimalSolver(std::make_shared<JYOPT::QuestionHs>(hs));
     return 0;
 }

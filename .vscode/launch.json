@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/holo/kjy_git/JYOPT/bin/JYOPT",
+            "program": "/home/holo/kjy_git/JYOPT/bin/demo",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

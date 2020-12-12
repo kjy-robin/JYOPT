@@ -3,6 +3,8 @@
 
 CMakeFiles/demo.dir/main.cpp.o
  ../include/jyopt/common/headers.h
+ ../include/jyopt/optimizer/optimizer_application.h
+ ../include/jyopt/optimizer/optimizer_param.h
  ../include/jyopt/question/question_base.h
  ../include/jyopt/question/question_hs071.h
  /home/holo/kjy_git/JYOPT/main.cpp
