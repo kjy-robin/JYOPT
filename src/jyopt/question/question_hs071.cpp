@@ -41,7 +41,7 @@ bool_t QuestionHs::Get_StartPoint_Info(const uint32_t& n, EVector& x_init)
 {
     UNREFERENCE_PARAM(n);
     x_init = EVector::Zero(4);
-    x_init << 1, 5, 5, 1;
+    x_init << 2, 1, 1, 2;
     return true;
 }
 

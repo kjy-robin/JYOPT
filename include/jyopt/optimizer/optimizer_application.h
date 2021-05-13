@@ -37,6 +37,12 @@ public:
     void Show_Lambda(const EVector& lam);
     void Show_Objective_Gradient(const EVector& grad);
     void Show_ZLU(const EVector& zl, const EVector& zu);
+    void Show_Calc_Info(std::shared_ptr<QuestionBase> ptr,
+                        uint32_t                      iter_num,
+                        const EVector&                x,
+                        const EVector&                s,
+                        float64_t                     alpha_pr,
+                        float64_t                     alpha_du);
 
 private:
     bool_t Calc_Residual(std::shared_ptr<QuestionBase> ptr,

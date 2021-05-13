@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/jyopt/common/constants.h
-jyopt/common/headers.h
--
-limits
--
-
 ../include/jyopt/common/headers.h
 stdint.h
 -
@@ -20,29 +14,21 @@ Eigen/Dense
 memory
 -
 
-../include/jyopt/optimizer/optimizer_application.h
-jyopt/common/headers.h
--
-jyopt/optimizer/optimizer_param.h
--
-jyopt/question/question_base.h
--
-
-../include/jyopt/optimizer/optimizer_param.h
-jyopt/common/headers.h
--
+../include/jyopt/common/macro.h
 
 ../include/jyopt/question/question_base.h
 jyopt/common/headers.h
 -
 
-/home/holo/kjy_git/JYOPT/src/jyopt/optimizer/optimizer_application.cpp
-jyopt/common/constants.h
+../include/jyopt/question/question_hs071.h
+jyopt/question/question_base.h
 -
-jyopt/optimizer/optimizer_application.h
+
+/home/holo/kjy_git/JYOPT/src/jyopt/question/question_hs071.cpp
+assert.h
 -
-cmath
+jyopt/common/macro.h
 -
-iostream
+jyopt/question/question_hs071.h
 -
 

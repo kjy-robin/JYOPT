@@ -563,7 +563,7 @@ bool_t OptimizerApplication::OptimalSolver(std::shared_ptr<QuestionBase> ptr)
         if (opt_e_mu <= param_.e_tol_)
         {
             std::cout << "* * * * * *Successful  Solution* * * * * *" << std::endl;
-            std::cout <<opt_x<<std::endl;
+            std::cout << opt_x << std::endl;
             break;
         }
 
@@ -584,6 +584,7 @@ bool_t OptimizerApplication::OptimalSolver(std::shared_ptr<QuestionBase> ptr)
                 // TODO : refresh filter
             }
         }
+        Show_Calc_Info(ptr, opt_iter_count, opt_x, opt_s, opt_alpha_pr, opt_alpha_du);
 
         if (opt_iter_count == param_.max_iteration_num_)
         {
@@ -897,5 +898,21 @@ void OptimizerApplication::Show_ZLU(const EVector& zl, const EVector& zu)
     std::cout << " - - - ZU - - - " << std::endl;
     std::cout << zu << std::endl;
 }
-
+void OptimizerApplication::Show_Calc_Info(std::shared_ptr<QuestionBase> ptr,
+                                          uint32_t                      iter_num,
+                                          const EVector&                x,
+                                          const EVector&                s,
+                                          float64_t                     alpha_pr,
+                                          float64_t                     alpha_du)
+{
+    if (iter_num == 1)
+    {
+        std::cout << " iterate_num|    obj   |    x     |     s     |   alpha_pr  |   alpha_du   |  log10(mu)"
+                  << std::endl;
+    }
+    float64_t temp_obj_val;
+    ptr->Calc_Objective_Function_Value(x.size(), x, temp_obj_val);
+    std::cout << iter_num << "   |   " << temp_obj_val << "   |   " << x.transpose() << "   |   " << s.transpose()
+              << "   |   " << alpha_pr << "   |   " << alpha_du << "   |   " << log10(param_.mu_) << std::endl;
+}
 }  // namespace JYOPT
